@@ -77,7 +77,8 @@ string Ninja_Naming (string First_Name, string Last_Name )
                         case 'X': Name = Name + "Na";  break;
                         case 'Y': Name = Name + "Fu";  break;
                         case 'Z': Name = Name + "Zi";  break;
-                        default: cout << "Wrong Character, Please use only letters\n";   break;
+                        // If a differnt character entered, exit with error message
+                        default: cerr << "Wrong Character, Please use only letters for the name\n"; exit(1);  break;
                     }
 
         }
