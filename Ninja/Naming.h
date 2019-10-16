@@ -51,7 +51,33 @@ string Ninja_Naming (string First_Name, string Last_Name )
                         case 'x': Name = Name + "na";  break;
                         case 'y': Name = Name + "fu";  break;
                         case 'z': Name = Name + "zi";  break;
-                        default: cout << "Error! operator is not correct";   break;
+                        case 'A': Name = Name + "Ka";  break;
+                        case 'B': Name = Name + "Zu";  break;
+                        case 'C': Name = Name + "Mi";  break;
+                        case 'D': Name = Name + "Te";  break;
+                        case 'E': Name = Name + "Ku";  break;
+                        case 'F': Name = Name + "Lu";  break;
+                        case 'G': Name = Name + "Ji";  break;
+                        case 'H': Name = Name + "Ri";  break;
+                        case 'I': Name = Name + "Ki";  break;
+                        case 'J': Name = Name + "Zu";  break;
+                        case 'K': Name = Name + "Me";  break;
+                        case 'L': Name = Name + "Ta";  break;
+                        case 'M': Name = Name + "Rin"; break;
+                        case 'N': Name = Name + "To";  break;
+                        case 'O': Name = Name + "Mo";  break;
+                        case 'P': Name = Name + "No";  break;
+                        case 'Q': Name = Name + "Ke";  break;
+                        case 'R': Name = Name + "Shi"; break;
+                        case 'S': Name = Name + "Ari"; break;
+                        case 'T': Name = Name + "Chi"; break;
+                        case 'U': Name = Name + "Do";  break;
+                        case 'V': Name = Name + "Ru";  break;
+                        case 'W': Name = Name + "Mei"; break;
+                        case 'X': Name = Name + "Na";  break;
+                        case 'Y': Name = Name + "Fu";  break;
+                        case 'Z': Name = Name + "Zi";  break;
+                        default: cout << "Wrong Character, Please use only letters\n";   break;
                     }
 
         }
