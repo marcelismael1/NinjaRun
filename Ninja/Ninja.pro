@@ -7,7 +7,8 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
-    Naming.h
+    Naming.h \
+    SelectMap.h
 
 DISTFILES += \
     input/input-all.list \
