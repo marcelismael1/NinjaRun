@@ -1,6 +1,7 @@
 #include <iostream>
 #include <Naming.h>
 #include <fstream>
+#include <Maps.h>
 
 using namespace std;
 
@@ -99,8 +100,53 @@ int main()
         }
 
 
+     //////////SELECT START COORDINATES//////////
+
+     int NinjaRow = 0;
+     int NinjaCol = 0;
+     for (int RowCount=0; RowCount < NumRows; RowCount++)
+        {
+         for(int ColCount=0; ColCount < NumCol; ColCount++)
+            {
+
+             if (Map[RowCount][ColCount]=='@' ) //get start point @
+                {
+                    NinjaRow = RowCount;
+                    NinjaCol = ColCount;
+                 }
+            }
+
+        }
+
+     cout <<endl<< "NinjaRow = " << NinjaRow<<endl<< "NinjaCol = "<<NinjaCol<<endl;
+
+    //////////MOVE NINJA//////////
+     for (i=0; i<5;i++)
+     {
+         if (Map[NinjaRow+1][NinjaCol]!= '#')
+            {
+             while (Map[NinjaRow+1][NinjaCol]!= '#') {NinjaRow++; cout<<"SOUTH\n";}              //Move South Row++
+            }
+         else
+             if(Map[NinjaRow][NinjaCol+1]!= '#')
+                {
+                 while (Map[NinjaRow][NinjaCol+1]!= '#') {NinjaCol++; cout<<"EAST\n";}           //Move EAST Col++
+                }
+             else
+                if(Map[NinjaRow-1][NinjaCol]!= '#')
+                    {
+                    while (Map[NinjaRow-1][NinjaCol]!= '#') {NinjaRow--; cout<<"NORTH\n";}      //Move NORTH Row--
+                    }
+                else
+                    if(Map[NinjaRow][NinjaCol-1]!= '#')
+                        {
+                        while (Map[NinjaRow][NinjaCol-1]!= '#')  {NinjaCol--; cout<<"WEST\n";}   //Move WEST Col--
+                        }
+                    else
+                        cout<<"LOOOOOOP"<<endl;
 
 
+     }
 
 
     cout << endl;
