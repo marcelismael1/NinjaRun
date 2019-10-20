@@ -7,8 +7,8 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
-    Maps.h \
-    Naming.h
+    Naming.h \
+    Ninja.h
 
 DISTFILES += \
     input/input-all.list \

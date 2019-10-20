@@ -1,9 +1,61 @@
 #include <iostream>
 #include <Naming.h>
 #include <fstream>
-#include <Maps.h>
+#include <Ninja.h>
 
 using namespace std;
+
+
+void GetStart(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol ) // GET @ dimentions
+{
+    for (int RowCount=0; RowCount < NumRows; RowCount++)
+       {
+        for(int ColCount=0; ColCount < NumCol; ColCount++)
+           {
+
+            if (Map[RowCount][ColCount]=='@' ) //get start point @
+               {
+                   NinjaRow = RowCount;
+                   NinjaCol = ColCount;
+                }
+           }
+
+       }
+    cout <<endl<< "NinjaRow = " << NinjaRow<<endl<< "NinjaCol = "<<NinjaCol<<endl;
+
+}
+
+void MoveNinja(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol ) //Move Ninja the default way
+{
+
+    for (int i=0; i<5;i++)
+    {
+        if (Map[NinjaRow+1][NinjaCol]!= '#')
+           {
+            while (Map[NinjaRow+1][NinjaCol]!= '#') {NinjaRow++; cout<<"SOUTH\n";}              //Move South Row++
+           }
+        else
+            if(Map[NinjaRow][NinjaCol+1]!= '#')
+               {
+                while (Map[NinjaRow][NinjaCol+1]!= '#') {NinjaCol++; cout<<"EAST\n";}           //Move EAST Col++
+               }
+            else
+               if(Map[NinjaRow-1][NinjaCol]!= '#')
+                   {
+                   while (Map[NinjaRow-1][NinjaCol]!= '#') {NinjaRow--; cout<<"NORTH\n";}        //Move NORTH Row--
+                   }
+               else
+                   if(Map[NinjaRow][NinjaCol-1]!= '#')
+                       {
+                       while (Map[NinjaRow][NinjaCol-1]!= '#')  {NinjaCol--; cout<<"WEST\n";}   //Move WEST Col--
+                       }
+                   else
+                       cout<<"LOOOOOOP"<<endl;
+
+
+    }
+}
+
 
 int main()
 {
@@ -19,7 +71,7 @@ int main()
     cout <<endl<<"Ninja Name is: "<< Ninja_Name << endl;
 
 
-    //////////IMPORT MAP LIST//////////
+    //////////IMPORT MAPS LIST//////////
     ifstream MapsListFile;
     MapsListFile.open("input/input-all.list");
 
@@ -29,7 +81,7 @@ int main()
             exit(1);
         }
 
-    //////////COUNTING THE MAPS//////////
+   //////////COUNTING THE MAPS//////////
     int MapsNumber=0;
     string MapsListFileLine;
     while (getline(MapsListFile, MapsListFileLine))
@@ -37,7 +89,8 @@ int main()
     MapsListFile.clear();              //return to the first of the file
     MapsListFile.seekg(0, ios::beg);   //bring file pointer position to begining of file
 
-    string MapsList[MapsNumber];       //Create Maps list array
+
+    string MapsList[MapsNumber];       //Create Maps array
     int i=0;
     while(i < MapsNumber)              //Read maps list file
        {
@@ -45,17 +98,16 @@ int main()
         cout <<i+1<<"  "<< MapsList[i] <<endl;
         i++;
        }
-
     //////////SELECT A MAP//////////
     cout << "Please select a map number:";
     cin >> MapsNumber; cout <<endl;
-    cout << "You selected: "<< MapsList[MapsNumber-1] <<endl;
+    cout << "you selected: "<< MapsList[MapsNumber-1] <<endl;
 
     //////////INPUT MAP FILE//////////
     ifstream MapFile;
     MapFile.open("input/"+MapsList[MapsNumber-1]);
 
-   //////////PRINT AND DEFINE DIMENTIONS//////////
+   //////////PRINT AND DEFINE MAP DIMENTIONS//////////
     char c;
     int Numchars, NumRows, NumCol; //Map Dimentions
     NumCol=0;
@@ -78,8 +130,12 @@ int main()
          cout<<c;
        }
 
-    //////////CREAT MAP MATRIX//////////
-     char Map [NumRows][NumCol];   //Main Map Matrix
+    //////////CREAT MAP MATRIX POINTER TO POINTER //////////  char Map [NumRows][NumCol];
+    char** Map = new char*[NumRows];           //Main Map Matrix
+    for(int a=0; a<NumRows; a++)
+       {
+          Map[a] = new char[NumCol];
+       }
 
      MapFile.clear();              //return to the first of the file
      MapFile.seekg(0, ios::beg);   //bring file pointer position to begining of file
@@ -98,57 +154,15 @@ int main()
             }
          cout <<endl;
         }
-
-
      //////////SELECT START COORDINATES//////////
-
      int NinjaRow = 0;
      int NinjaCol = 0;
-     for (int RowCount=0; RowCount < NumRows; RowCount++)
-        {
-         for(int ColCount=0; ColCount < NumCol; ColCount++)
-            {
-
-             if (Map[RowCount][ColCount]=='@' ) //get start point @
-                {
-                    NinjaRow = RowCount;
-                    NinjaCol = ColCount;
-                 }
-            }
-
-        }
-
-     cout <<endl<< "NinjaRow = " << NinjaRow<<endl<< "NinjaCol = "<<NinjaCol<<endl;
+     GetStart(Map,NumRows,NumCol,NinjaRow, NinjaCol);   //Call function get @ location
 
     //////////MOVE NINJA//////////
-     for (i=0; i<5;i++)
-     {
-         if (Map[NinjaRow+1][NinjaCol]!= '#')
-            {
-             while (Map[NinjaRow+1][NinjaCol]!= '#') {NinjaRow++; cout<<"SOUTH\n";}              //Move South Row++
-            }
-         else
-             if(Map[NinjaRow][NinjaCol+1]!= '#')
-                {
-                 while (Map[NinjaRow][NinjaCol+1]!= '#') {NinjaCol++; cout<<"EAST\n";}           //Move EAST Col++
-                }
-             else
-                if(Map[NinjaRow-1][NinjaCol]!= '#')
-                    {
-                    while (Map[NinjaRow-1][NinjaCol]!= '#') {NinjaRow--; cout<<"NORTH\n";}      //Move NORTH Row--
-                    }
-                else
-                    if(Map[NinjaRow][NinjaCol-1]!= '#')
-                        {
-                        while (Map[NinjaRow][NinjaCol-1]!= '#')  {NinjaCol--; cout<<"WEST\n";}   //Move WEST Col--
-                        }
-                    else
-                        cout<<"LOOOOOOP"<<endl;
+     MoveNinja(Map,NumRows,NumCol,NinjaRow, NinjaCol);  //Call Ninja Moving the default directions
 
+     cout << endl;
+     return 0;
 
-     }
-
-
-    cout << endl;
-    return 0;
 }

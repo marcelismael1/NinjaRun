@@ -92,5 +92,7 @@ string Ninja_Naming (string First_Name, string Last_Name )
 
     string Ninja_Name = Ninja_FirstName + " " + Ninja_LastName;
     return Ninja_Name;
+
+
 }
 #endif // NAMING_H
