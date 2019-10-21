@@ -5,62 +5,11 @@
 
 using namespace std;
 
-
-void GetStart(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol ) // GET @ dimentions
-{
-    for (int RowCount=0; RowCount < NumRows; RowCount++)
-       {
-        for(int ColCount=0; ColCount < NumCol; ColCount++)
-           {
-
-            if (Map[RowCount][ColCount]=='@' ) //get start point @
-               {
-                   NinjaRow = RowCount;
-                   NinjaCol = ColCount;
-                }
-           }
-
-       }
-    cout <<endl<< "NinjaRow = " << NinjaRow<<endl<< "NinjaCol = "<<NinjaCol<<endl;
-
-}
-
-void MoveNinja(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol ) //Move Ninja the default way
-{
-
-    for (int i=0; i<5;i++)
-    {
-        if (Map[NinjaRow+1][NinjaCol]!= '#')
-           {
-            while (Map[NinjaRow+1][NinjaCol]!= '#') {NinjaRow++; cout<<"SOUTH\n";}              //Move South Row++
-           }
-        else
-            if(Map[NinjaRow][NinjaCol+1]!= '#')
-               {
-                while (Map[NinjaRow][NinjaCol+1]!= '#') {NinjaCol++; cout<<"EAST\n";}           //Move EAST Col++
-               }
-            else
-               if(Map[NinjaRow-1][NinjaCol]!= '#')
-                   {
-                   while (Map[NinjaRow-1][NinjaCol]!= '#') {NinjaRow--; cout<<"NORTH\n";}        //Move NORTH Row--
-                   }
-               else
-                   if(Map[NinjaRow][NinjaCol-1]!= '#')
-                       {
-                       while (Map[NinjaRow][NinjaCol-1]!= '#')  {NinjaCol--; cout<<"WEST\n";}   //Move WEST Col--
-                       }
-                   else
-                       cout<<"LOOOOOOP"<<endl;
-
-
-    }
-}
-
-
 int main()
 {
+
     //////////NAME THE NINJA//////////
-    string Your_First_Name;
+    /*string Your_First_Name;
     string Your_Last_Name;
     string Ninja_Name;
     cout<<"Enter your first name:";
@@ -69,7 +18,7 @@ int main()
     cin>>Your_Last_Name;                                         //Get Last name
     Ninja_Name = Ninja_Naming(Your_First_Name,Your_Last_Name);   //Assign Ninja name and call Ninja_Naming function
     cout <<endl<<"Ninja Name is: "<< Ninja_Name << endl;
-
+*/
 
     //////////IMPORT MAPS LIST//////////
     ifstream MapsListFile;
@@ -81,7 +30,7 @@ int main()
             exit(1);
         }
 
-   //////////COUNTING THE MAPS//////////
+    //////////COUNTING THE MAPS//////////
     int MapsNumber=0;
     string MapsListFileLine;
     while (getline(MapsListFile, MapsListFileLine))
@@ -107,7 +56,7 @@ int main()
     ifstream MapFile;
     MapFile.open("input/"+MapsList[MapsNumber-1]);
 
-   //////////PRINT AND DEFINE MAP DIMENTIONS//////////
+    //////////PRINT AND DEFINE MAP DIMENTIONS//////////
     char c;
     int Numchars, NumRows, NumCol; //Map Dimentions
     NumCol=0;
@@ -137,10 +86,10 @@ int main()
           Map[a] = new char[NumCol];
        }
 
-     MapFile.clear();              //return to the first of the file
-     MapFile.seekg(0, ios::beg);   //bring file pointer position to begining of file
+    MapFile.clear();              //return to the first of the file
+    MapFile.seekg(0, ios::beg);   //bring file pointer position to begining of file
 
-     for (int RowCount=0; RowCount < NumRows; RowCount++) //assign values to map matrix
+    for (int RowCount=0; RowCount < NumRows; RowCount++) //assign values to map matrix
         {
          for(int ColCount=0; ColCount < NumCol; ColCount++)
             {
@@ -154,15 +103,183 @@ int main()
             }
          cout <<endl;
         }
-     //////////SELECT START COORDINATES//////////
-     int NinjaRow = 0;
-     int NinjaCol = 0;
-     GetStart(Map,NumRows,NumCol,NinjaRow, NinjaCol);   //Call function get @ location
+    //////////GET START COORDINATES//////////
+    int NinjaRow = 0;
+    int NinjaCol = 0;
+    GetStart(Map,NumRows,NumCol,NinjaRow, NinjaCol);   //Call function get @ location
+
+
+
+    int row = NinjaRow;   //Temporary Coordinations
+    int col = NinjaCol;   //Temporary Coordinations
+    char dir;             //Temporary Direction
+
+    //############################// START //############################//
+    Start:
+    //////////Distroy $//////////
+    if(Mirror==0) dir='S'; else dir='W';                       //reset temp direction
+    for(int j=0; j<4;j++) {  cout << dir<<endl;                //Check for '$'
+    if (Shuriken>0)
+                {
+                    switch (dir)
+                    {
+                    case 'S': row = NinjaRow; col=NinjaCol;
+                              while(Map[row+1][col]!='$' && Map[row+1][col]!='X' && Map[row+1][col]!='#'){row++;} //Check SOUTH
+                              if (Map[row+1][col] == '$')
+                              {
+                                  cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
+                                  exit(0);
+                              }
+                              else {if(Mirror==0)dir='E';
+                                   else          dir='W';}
+                                break;
+
+                    case 'E': row = NinjaRow; col=NinjaCol;
+                              while(Map[row][col+1]!='$' && Map[row][col+1]!='X' && Map[row][col+1]!='#'){col++;} //Check EAST
+                              if (Map[row][col+1] == '$')
+                              {
+                                  cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  exit(0);
+                              }
+                              else {if(Mirror==0)dir='N';
+                                   else         dir='S';}
+                              break;
+
+                    case 'N': row = NinjaRow; col=NinjaCol;
+                              while(Map[row-1][col]!='$' && Map[row-1][col]!='X' && Map[row-1][col]!='#'){row--;} //Check NORTH
+                              if (Map[row-1][col] == '$')
+                              {
+                                  cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  exit(0);
+                              }
+                              else {if(Mirror==0)dir='W';
+                                   else          dir='E';}
+                              break;
+
+                    case 'W': row = NinjaRow; col=NinjaCol;
+                              while(Map[row][col-1]!='$' && Map[row][col-1]!='X' && Map[row][col-1]!='#'){col--;} //Check WEST
+                              if (Map[row][col-1] == '$')
+                              {
+                                  cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  exit(0);
+                              }
+                              else {if(Mirror==0)dir='S';
+                                   else          dir='N';}
+                              break;
+
+                    }
+                }
+    else break;
+    }
+
+    //////////Distroy X//////////
+    if(Mirror==0) dir='S'; else dir='W';                        //reset temp direction
+    for(int j=0; j<4;) {  cout <<dir<<endl<<"Shuriken"<<Shuriken<<endl;                //Check for 'X'
+                if(Shuriken>0)
+                {
+                    switch (dir)
+                        {
+                        case 'S': row = NinjaRow; col=NinjaCol;
+                                  while(Map[row+1][col]!='X' && Map[row+1][col]!='#'){row++;} //Check SOUTH
+                                  if (Map[row+1][col] == 'X')
+                                  {
+                                      Shuriken--;
+                                      Map[row+1][col]='*';
+                                  }
+                                  else
+                                  {
+                                      if(Mirror==0)
+                                      {
+                                          dir='E';
+                                          j++;
+                                      }
+                                       else
+                                      {
+                                          dir='W';
+                                          j++;
+                                      }
+                                  }
+                                  break;
+
+                        case 'E': row = NinjaRow; col=NinjaCol;
+                                  while(Map[row][col+1]!='X' && Map[row][col+1]!='#'){col++;} //Check EAST
+                                  if (Map[row][col+1] == 'X')
+                                  {
+                                      Shuriken--;
+                                      Map[row][col+1]='*';
+                                  }
+                                  else
+                                  {
+                                      if(Mirror==0)
+                                      {
+                                          dir='N';
+                                          j++;
+                                      }
+                                       else
+                                      {
+                                          dir='S';
+                                          j++;
+                                      }
+                                  }
+                                  break;
+
+                        case 'N': row = NinjaRow; col=NinjaCol;
+                                  while(Map[row-1][col]!='X' && Map[row-1][col]!='#'){row--;} //Check NORTH
+                                  if (Map[row-1][col] == 'X')
+                                  {
+                                      Shuriken--;
+                                      Map[row-1][col]='*';
+                                  }
+                                  else
+                                  {
+                                      if(Mirror==0)
+                                      {
+                                          dir='W';
+                                          j++;
+                                      }
+                                       else
+                                      {
+                                          dir='E';
+                                          j++;
+                                      }
+                                  }
+                                  break;
+
+                        case 'W': row = NinjaRow; col=NinjaCol;
+                                  while(Map[row][col-1]!='X' && Map[row][col-1]!='#'){col--;} //Check WEST
+                                  if (Map[row][col-1] == 'X')
+                                  {
+                                      Shuriken--;
+                                      Map[row][col-1]='*';
+                                  }
+                                  else
+                                  {
+                                      if(Mirror==0)
+                                      {
+                                          dir='S';
+                                          j++;
+                                      }
+                                       else
+                                      {dir='N';
+                                          j++;
+                                      }
+                                  }
+                                  break;
+
+                        }
+                }
+                else break;
+                }
+
+
+
+
 
     //////////MOVE NINJA//////////
-     MoveNinja(Map,NumRows,NumCol,NinjaRow, NinjaCol);  //Call Ninja Moving the default directions
+    //MoveNinja(Map,NumRows,NumCol,NinjaRow, NinjaCol);  //Call Ninja Moving the default directions
 
-     cout << endl;
-     return 0;
+    PrintMap(Map, NumRows,NumCol);
+    cout << endl;
+    return 0;
 
 }
