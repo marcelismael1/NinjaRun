@@ -112,4 +112,24 @@ void ChangeDirection(char **Map,int NinjaRow,int NinjaCol, bool Mirror, char &Di
 
 }
 
+void PathWay (char **Map,int NumRows, int NumCol, int &NinjaRow,int &NinjaCol, char NextChar)  //To Move accross the map
+{
+    for (int RowCount=0; RowCount < NumRows; RowCount++)
+       {
+        for(int ColCount=0; ColCount < NumCol; ColCount++)
+           {
+
+            if (Map[RowCount][ColCount]==NextChar ) //get path way coordinates
+               if ( RowCount != NinjaRow|| ColCount != NinjaCol)
+                    {
+                       NinjaRow = RowCount;
+                       NinjaCol = ColCount;
+                    }
+
+           }
+
+       }
+    //cout << "NinjaRow : "<< NinjaRow<<endl;
+    //cout<<"NinjaCol :"<<NinjaCol<<endl;
+}
 #endif // NINJA_H

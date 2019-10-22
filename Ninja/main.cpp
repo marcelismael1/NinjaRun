@@ -7,18 +7,28 @@ using namespace std;
 
 int main()
 {
+    //////////BANNER//////////
+    cout<<"############################(( NINJA LITE ))#################################\n\n";
+    cout<<"BLACK LOTUS Clan is counting on you to destroy our rivals the RED CLAWS.\n"
+          "Their actions are no longer accepted and its time to end it.\n"
+          "It is your duty as the head of our clan to organize the attack to their HQ.\n"
+          "We trust your judgment, please send our best warrior.\n\n"
+          "WHO WOULD IT BE?\n";
+          cout<<"#############################################################################\n\n";
+
 
     //////////NAME THE NINJA//////////
-    /*string Your_First_Name;
-    string Your_Last_Name;
     string Ninja_Name;
-    cout<<"Enter your first name:";
-    cin>>Your_First_Name;                                         //Get first name
-    cout<<endl<<"Enter your last name:";
-    cin>>Your_Last_Name;                                         //Get Last name
-    Ninja_Name = Ninja_Naming(Your_First_Name,Your_Last_Name);   //Assign Ninja name and call Ninja_Naming function
+    Ninja_Name = Ninja_Naming();
     cout <<endl<<"Ninja Name is: "<< Ninja_Name << endl;
-*/
+
+
+    //////////BANNER//////////
+    cout<<"\n\n############################(( SELECT MAP ))#################################\n";
+    cout<<"To guarantee the success of our mission, we have the maps of their  terretory\n"
+          "and here are they, this well give us a great advantage to plan the attack\n";
+    cout<<"#############################################################################\n\n";
+
 
     //////////IMPORT MAPS LIST//////////
     ifstream MapsListFile;
@@ -29,6 +39,7 @@ int main()
             cerr<< "No file detected\n";
             exit(1);
         }
+
 
     //////////COUNTING THE MAPS//////////
     int MapsNumber=0;
@@ -47,14 +58,22 @@ int main()
         cout <<i+1<<"  "<< MapsList[i] <<endl;
         i++;
        }
+
+
     //////////SELECT A MAP//////////
-    cout << "Please select a map number:";
+    cout << "\nPlease select a map number:";
     cin >> MapsNumber; cout <<endl;
-    cout << "you selected: "<< MapsList[MapsNumber-1] <<endl;
+
+
+    //////////BANNER//////////
+    cout<<"\n\n############################(( RESULT ))#################################\n\n";
+    cout<<Ninja_Name<<endl<<endl;
+
 
     //////////INPUT MAP FILE//////////
     ifstream MapFile;
     MapFile.open("input/"+MapsList[MapsNumber-1]);
+
 
     //////////PRINT AND DEFINE MAP DIMENTIONS//////////
     char c;
@@ -79,12 +98,14 @@ int main()
          cout<<c;
        }
 
+
     //////////CREAT MAP MATRIX POINTER TO POINTER //////////  char Map [NumRows][NumCol];
     char** Map = new char*[NumRows];           //Main Map Matrix
     for(int a=0; a<NumRows; a++)
        {
           Map[a] = new char[NumCol];
        }
+
 
     ////////// ASSIGN VALUES TO MAP MATRIX//////////
     MapFile.clear();              //return to the first of the file
@@ -98,12 +119,13 @@ int main()
              if (c!='\n' )
                 {
                  Map[RowCount][ColCount]=c;
-                 cout <<Map[RowCount][ColCount];
+
                  }
              else ColCount--;
             }
-         cout <<endl;
         }
+
+
     //////////GET START COORDINATES//////////
     int NinjaRow = 0;
     int NinjaCol = 0;
@@ -122,16 +144,17 @@ int main()
     Start:   //---------------------//
 
     Loop++;
-    if (Loop >1000) {cout <<"LOOP, the Holy Symbol can't be Distroyed \n"; exit (0);}  //Check for loop
+    if (Loop >100) {cout <<"\n\nLOOP, the Holy Symbol can't be Distroyed \n\n"; exit (0);}  //Check for loop
 
 
     int row = NinjaRow;   //Temporary Coordinations
     int col = NinjaCol;   //Temporary Coordinations
     char dir;             //Temporary Direction
 
+
     //////////Distroy $ with Shuriken//////////
     if(Mirror==0) dir='S'; else dir='W';                       //reset temp direction
-    for(int j=0; j<4;j++) {  cout << dir<<endl;                //Check for '$'
+    for(int j=0; j<4;j++) {                                    //Check for '$'
     if (Shuriken>0)
                 {
                     switch (dir)
@@ -197,9 +220,10 @@ int main()
     else break;
     }
 
+
     //////////Distroy X with Shuriken//////////
     if(Mirror==0) dir='S'; else dir='W';                        //reset temp direction
-    for(int j=0; j<4;) {  cout <<dir<<endl<<"Shuriken"<<Shuriken<<endl;                //Check for 'X'
+    for(int j=0; j<4;) {                                        //Check for 'X'
                 if(Shuriken>0)
                 {
                     switch (dir)
@@ -311,20 +335,17 @@ int main()
 
     Move:   //---------------------//
 
-    cout <<"Direction:"<<Direction<<endl;
 
     //////////Get Next Char//////////
-
     NextChar = GetNextChar(Map,NinjaRow,NinjaCol, Direction); //Next Char according to the direction
-    cout<<"Next Char is :"<<NextChar<<endl;
 
     switch (NextChar)
     {
         case ' ': MoveNinja(NinjaRow,NinjaCol,Direction);                      goto Start;
         case '$': if(Breaker==1)
                     {
-                        PrintMap(Map, NumRows,NumCol);
                         cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
+                        PrintMap(Map, NumRows,NumCol);
                         exit(0);
                     }
                   else ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction); goto Move;
@@ -336,30 +357,49 @@ int main()
                                                                                goto Start;
                     }
                   else ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction); goto Move;
+
         case '#': ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction)     ; goto Move;
+
         case '*': MoveNinja(NinjaRow,NinjaCol,Direction);
                   Map[NinjaRow][NinjaCol] = ' ';
                   Shuriken++                                                  ; goto Start;
+
         case 'S': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='S'       ; goto Start;
+
         case 'E': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='E'       ; goto Start;
+
         case 'N': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='N'       ; goto Start;
+
         case 'W': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='W'       ; goto Start;
+
         case 'M': MoveNinja(NinjaRow,NinjaCol,Direction); Mirror= !Mirror     ; goto Start;
+
         case 'B': MoveNinja(NinjaRow,NinjaCol,Direction); Breaker= !Breaker   ; goto Start;
-        case 'F': goto Start;
-        case 'G': goto Start;
-        case 'H': goto Start;
-        case 'I': goto Start;
-        case 'J': goto Start;
-        case 'K': goto Start;
-        case 'L': goto Start;
-        default: cout << "Wrong Direction, the game will be terminated\n"; exit(0);
+
+        case 'F': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'G': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'H': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'I': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'J': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'K': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        case 'L': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  PathWay (Map, NumRows, NumCol,NinjaRow, NinjaCol, NextChar) ; goto Start;
+
+        default: cout << "Wrong Direction, the game will be terminated\n"; break;
 
     }
-
-
-
-
 
     cout << endl;
     return 0;

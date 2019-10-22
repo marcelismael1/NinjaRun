@@ -5,11 +5,16 @@
 using namespace std;
 
 //Ninja Naming function
-string Ninja_Naming (string First_Name, string Last_Name )
+string Ninja_Naming ()
 {
+    Naming:
+
     string Ninja_FirstName;
     string Ninja_LastName;
-
+    cout<<"First Name: ";
+    cin>>Ninja_FirstName;
+    cout<<"Last Name: ";
+    cin>>Ninja_LastName;
     for( int j = 3; j < 5; j++ ) //To select between first and last name
     {
         string Name; //For letter assinment process
@@ -17,8 +22,8 @@ string Ninja_Naming (string First_Name, string Last_Name )
 
         switch (j)
                 {
-                    case 3: N = First_Name;  break;
-                    case 4: N = Last_Name;  break;
+                    case 3: N = Ninja_FirstName;  break;
+                    case 4: N = Ninja_LastName;  break;
                     default:   break;
                 }
         for( int i = 0; i < j; i++ )  //Assign japanese letters
@@ -78,7 +83,8 @@ string Ninja_Naming (string First_Name, string Last_Name )
                         case 'Y': Name = Name + "Fu";  break;
                         case 'Z': Name = Name + "Zi";  break;
                         // If a differnt character entered, exit with error message
-                        default: cerr << "Wrong Character, Please use only letters for the name\n"; exit(1);  break;
+                        default: cerr << "Wrong Character, Please use only letters for the name\n"; goto Naming;
+
                     }
 
         }
