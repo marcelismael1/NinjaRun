@@ -86,6 +86,7 @@ int main()
           Map[a] = new char[NumCol];
        }
 
+    ////////// ASSIGN VALUES TO MAP MATRIX//////////
     MapFile.clear();              //return to the first of the file
     MapFile.seekg(0, ios::beg);   //bring file pointer position to begining of file
 
@@ -136,6 +137,7 @@ int main()
                               {
                                   cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
+                                  PrintMap(Map, NumRows,NumCol);
                                   exit(0);
                               }
                               else {if(Mirror==0)dir='E';
@@ -148,6 +150,7 @@ int main()
                               {
                                   cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  PrintMap(Map, NumRows,NumCol);
                                   exit(0);
                               }
                               else {if(Mirror==0)dir='N';
@@ -160,6 +163,7 @@ int main()
                               {
                                   cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  PrintMap(Map, NumRows,NumCol);
                                   exit(0);
                               }
                               else {if(Mirror==0)dir='W';
@@ -172,6 +176,7 @@ int main()
                               {
                                   cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
+                                  PrintMap(Map, NumRows,NumCol);
                                   exit(0);
                               }
                               else {if(Mirror==0)dir='S';
@@ -304,6 +309,7 @@ int main()
         case ' ': MoveNinja(NinjaRow,NinjaCol,Direction);                      goto Start;
         case '$': if(Breaker==1)
                     {
+                        PrintMap(Map, NumRows,NumCol);
                         cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
                         exit(0);
                     }
@@ -311,17 +317,21 @@ int main()
 
         case 'X': if(Breaker==1)
                     {
-                        //BREAK
+                        MoveNinja(NinjaRow,NinjaCol,Direction);
+                        Map[NinjaRow][NinjaCol] = ' ';
+                                                                               goto Start;
                     }
                   else ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction); goto Move;
         case '#': ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction)     ; goto Move;
-        case '*': MoveNinja(NinjaRow,NinjaCol,Direction); Shuriken++          ; goto Start;
+        case '*': MoveNinja(NinjaRow,NinjaCol,Direction);
+                  Map[NinjaRow][NinjaCol] = ' ';
+                  Shuriken++                                                  ; goto Start;
         case 'S': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='S'       ; goto Start;
         case 'E': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='E'       ; goto Start;
         case 'N': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='N'       ; goto Start;
         case 'W': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='W'       ; goto Start;
-        case 'M': MoveNinja(NinjaRow,NinjaCol,Direction); Mirror= !Mirror     ;cout <<"Mirror:"<<Mirror<<endl; goto Start;
-        case 'B': MoveNinja(NinjaRow,NinjaCol,Direction); Breaker= !Breaker   ;cout <<"Breaker:"<<Breaker<<endl; goto Start;
+        case 'M': MoveNinja(NinjaRow,NinjaCol,Direction); Mirror= !Mirror     ; goto Start;
+        case 'B': MoveNinja(NinjaRow,NinjaCol,Direction); Breaker= !Breaker   ; goto Start;
         case 'F': goto Start;
         case 'G': goto Start;
         case 'H': goto Start;
@@ -336,7 +346,7 @@ int main()
 
 
 
-    PrintMap(Map, NumRows,NumCol);
+
     cout << endl;
     return 0;
 
