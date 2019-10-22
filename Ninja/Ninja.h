@@ -8,6 +8,7 @@ bool Breaker;     //Breaker Mode Off or on
 bool Mirror;      //Mirror mode status
 char Direction; //Ninja Direction
 char NextChar;
+int Loop;
 
 void PrintMap(char **Map, int NumRows, int NumCol)   //A Function to print the map
 {

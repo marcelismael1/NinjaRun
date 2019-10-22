@@ -116,9 +116,14 @@ int main()
     Breaker=0;
     Mirror=0;
     Direction='S';
+    Loop = 0;
 
     //############################// START //############################//
     Start:   //---------------------//
+
+    Loop++;
+    if (Loop >1000) {cout <<"LOOP, the Holy Symbol can't be Distroyed \n"; exit (0);} //Check Loop
+
 
     int row = NinjaRow;   //Temporary Coordinations
     int col = NinjaCol;   //Temporary Coordinations
@@ -132,7 +137,8 @@ int main()
                     switch (dir)
                     {
                     case 'S': row = NinjaRow; col=NinjaCol;
-                              while(Map[row+1][col]!='$' && Map[row+1][col]!='X' && Map[row+1][col]!='#'){row++;} //Check SOUTH
+                              while(Map[row+1][col]!='$' && Map[row+1][col]!='X' && Map[row+1][col]!='#' && Map[row+1][col]!='M')
+                                {row++;} //Check SOUTH
                               if (Map[row+1][col] == '$')
                               {
                                   cout << "THROW\n";
@@ -145,7 +151,8 @@ int main()
                                 break;
 
                     case 'E': row = NinjaRow; col=NinjaCol;
-                              while(Map[row][col+1]!='$' && Map[row][col+1]!='X' && Map[row][col+1]!='#'){col++;} //Check EAST
+                              while(Map[row][col+1]!='$' && Map[row][col+1]!='X' && Map[row][col+1]!='#'&&Map[row][col+1]!='M')
+                                {col++;} //Check EAST
                               if (Map[row][col+1] == '$')
                               {
                                   cout << "THROW\n";
@@ -158,7 +165,8 @@ int main()
                               break;
 
                     case 'N': row = NinjaRow; col=NinjaCol;
-                              while(Map[row-1][col]!='$' && Map[row-1][col]!='X' && Map[row-1][col]!='#'){row--;} //Check NORTH
+                              while(Map[row-1][col]!='$' && Map[row-1][col]!='X' && Map[row-1][col]!='#'&& Map[row-1][col]!='M')
+                                {row--;} //Check NORTH
                               if (Map[row-1][col] == '$')
                               {
                                   cout << "THROW\n";
@@ -171,7 +179,8 @@ int main()
                               break;
 
                     case 'W': row = NinjaRow; col=NinjaCol;
-                              while(Map[row][col-1]!='$' && Map[row][col-1]!='X' && Map[row][col-1]!='#'){col--;} //Check WEST
+                              while(Map[row][col-1]!='$' && Map[row][col-1]!='X' && Map[row][col-1]!='#'&& Map[row][col-1]!='M')
+                                {col--;} //Check WEST
                               if (Map[row][col-1] == '$')
                               {
                                   cout << "THROW\n";
@@ -196,7 +205,8 @@ int main()
                     switch (dir)
                         {
                         case 'S': row = NinjaRow; col=NinjaCol;
-                                  while(Map[row+1][col]!='X' && Map[row+1][col]!='#'){row++;} //Check SOUTH
+                                  while(Map[row+1][col]!='X' && Map[row+1][col]!='#'&& Map[row+1][col]!='M')
+                                    {row++;} //Check SOUTH
                                   if (Map[row+1][col] == 'X')
                                   {
                                       Shuriken--;
@@ -220,7 +230,8 @@ int main()
                                   break;
 
                         case 'E': row = NinjaRow; col=NinjaCol;
-                                  while(Map[row][col+1]!='X' && Map[row][col+1]!='#'){col++;} //Check EAST
+                                  while(Map[row][col+1]!='X' && Map[row][col+1]!='#'&& Map[row][col+1]!='M')
+                                    {col++;} //Check EAST
                                   if (Map[row][col+1] == 'X')
                                   {
                                       Shuriken--;
@@ -244,7 +255,8 @@ int main()
                                   break;
 
                         case 'N': row = NinjaRow; col=NinjaCol;
-                                  while(Map[row-1][col]!='X' && Map[row-1][col]!='#'){row--;} //Check NORTH
+                                  while(Map[row-1][col]!='X' && Map[row-1][col]!='#'&& Map[row-1][col]!='M')
+                                    {row--;} //Check NORTH
                                   if (Map[row-1][col] == 'X')
                                   {
                                       Shuriken--;
@@ -268,7 +280,8 @@ int main()
                                   break;
 
                         case 'W': row = NinjaRow; col=NinjaCol;
-                                  while(Map[row][col-1]!='X' && Map[row][col-1]!='#'){col--;} //Check WEST
+                                  while(Map[row][col-1]!='X' && Map[row][col-1]!='#'&& Map[row][col-1]!='M')
+                                    {col--;} //Check WEST
                                   if (Map[row][col-1] == 'X')
                                   {
                                       Shuriken--;
@@ -297,6 +310,7 @@ int main()
 
 
     Move:   //---------------------//
+
     cout <<"Direction:"<<Direction<<endl;
 
     //////////Get Next Char//////////
