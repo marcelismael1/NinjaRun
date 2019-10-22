@@ -122,14 +122,14 @@ int main()
     Start:   //---------------------//
 
     Loop++;
-    if (Loop >1000) {cout <<"LOOP, the Holy Symbol can't be Distroyed \n"; exit (0);} //Check Loop
+    if (Loop >1000) {cout <<"LOOP, the Holy Symbol can't be Distroyed \n"; exit (0);}  //Check for loop
 
 
     int row = NinjaRow;   //Temporary Coordinations
     int col = NinjaCol;   //Temporary Coordinations
     char dir;             //Temporary Direction
 
-    //////////Distroy $//////////
+    //////////Distroy $ with Shuriken//////////
     if(Mirror==0) dir='S'; else dir='W';                       //reset temp direction
     for(int j=0; j<4;j++) {  cout << dir<<endl;                //Check for '$'
     if (Shuriken>0)
@@ -197,7 +197,7 @@ int main()
     else break;
     }
 
-    //////////Distroy X//////////
+    //////////Distroy X with Shuriken//////////
     if(Mirror==0) dir='S'; else dir='W';                        //reset temp direction
     for(int j=0; j<4;) {  cout <<dir<<endl<<"Shuriken"<<Shuriken<<endl;                //Check for 'X'
                 if(Shuriken>0)
