@@ -109,13 +109,20 @@ int main()
     GetStart(Map,NumRows,NumCol,NinjaRow, NinjaCol);   //Call function get @ location
 
 
+    //////////INITILIZATIONS//////////
+
+    Shuriken = 3;
+    Breaker=0;
+    Mirror=0;
+    Direction='S';
+
+    //############################// START //############################//
+    Start:   //---------------------//
 
     int row = NinjaRow;   //Temporary Coordinations
     int col = NinjaCol;   //Temporary Coordinations
     char dir;             //Temporary Direction
 
-    //############################// START //############################//
-    Start:
     //////////Distroy $//////////
     if(Mirror==0) dir='S'; else dir='W';                       //reset temp direction
     for(int j=0; j<4;j++) {  cout << dir<<endl;                //Check for '$'
@@ -127,6 +134,7 @@ int main()
                               while(Map[row+1][col]!='$' && Map[row+1][col]!='X' && Map[row+1][col]!='#'){row++;} //Check SOUTH
                               if (Map[row+1][col] == '$')
                               {
+                                  cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
                                   exit(0);
                               }
@@ -138,6 +146,7 @@ int main()
                               while(Map[row][col+1]!='$' && Map[row][col+1]!='X' && Map[row][col+1]!='#'){col++;} //Check EAST
                               if (Map[row][col+1] == '$')
                               {
+                                  cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
                                   exit(0);
                               }
@@ -149,6 +158,7 @@ int main()
                               while(Map[row-1][col]!='$' && Map[row-1][col]!='X' && Map[row-1][col]!='#'){row--;} //Check NORTH
                               if (Map[row-1][col] == '$')
                               {
+                                  cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
                                   exit(0);
                               }
@@ -160,6 +170,7 @@ int main()
                               while(Map[row][col-1]!='$' && Map[row][col-1]!='X' && Map[row][col-1]!='#'){col--;} //Check WEST
                               if (Map[row][col-1] == '$')
                               {
+                                  cout << "THROW\n";
                                   cout << "\nGAME OVER, the Holy Symbol of the Red Claw has been distroyed\n";
                                   exit(0);
                               }
@@ -184,7 +195,9 @@ int main()
                                   if (Map[row+1][col] == 'X')
                                   {
                                       Shuriken--;
+                                      cout<<"THROW\n";
                                       Map[row+1][col]='*';
+                                      goto Start;
                                   }
                                   else
                                   {
@@ -206,7 +219,9 @@ int main()
                                   if (Map[row][col+1] == 'X')
                                   {
                                       Shuriken--;
+                                      cout<<"THROW\n";
                                       Map[row][col+1]='*';
+                                      goto Start;
                                   }
                                   else
                                   {
@@ -228,7 +243,9 @@ int main()
                                   if (Map[row-1][col] == 'X')
                                   {
                                       Shuriken--;
+                                      cout<<"THROW\n";
                                       Map[row-1][col]='*';
+                                      goto Start;
                                   }
                                   else
                                   {
@@ -250,7 +267,9 @@ int main()
                                   if (Map[row][col-1] == 'X')
                                   {
                                       Shuriken--;
+                                      cout<<"THROW\n";
                                       Map[row][col-1]='*';
+                                      goto Start;
                                   }
                                   else
                                   {
@@ -272,11 +291,50 @@ int main()
                 }
 
 
+    Move:   //---------------------//
+    cout <<"Direction:"<<Direction<<endl;
+
+    //////////Get Next Char//////////
+
+    NextChar = GetNextChar(Map,NinjaRow,NinjaCol, Direction); //Next Char according to the direction
+    cout<<"Next Char is :"<<NextChar<<endl;
+
+    switch (NextChar)
+    {
+        case ' ': MoveNinja(NinjaRow,NinjaCol,Direction);                      goto Start;
+        case '$': if(Breaker==1)
+                    {
+                        cout << "\nGAME OVER, the Holy Symbol of the Red Claw tas been distroyed\n";
+                        exit(0);
+                    }
+                  else ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction); goto Move;
+
+        case 'X': if(Breaker==1)
+                    {
+                        //BREAK
+                    }
+                  else ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction); goto Move;
+        case '#': ChangeDirection(Map,NinjaRow,NinjaCol,Mirror,Direction)     ; goto Move;
+        case '*': MoveNinja(NinjaRow,NinjaCol,Direction); Shuriken++          ; goto Start;
+        case 'S': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='S'       ; goto Start;
+        case 'E': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='E'       ; goto Start;
+        case 'N': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='N'       ; goto Start;
+        case 'W': MoveNinja(NinjaRow,NinjaCol,Direction); Direction='W'       ; goto Start;
+        case 'M': MoveNinja(NinjaRow,NinjaCol,Direction); Mirror= !Mirror     ;cout <<"Mirror:"<<Mirror<<endl; goto Start;
+        case 'B': MoveNinja(NinjaRow,NinjaCol,Direction); Breaker= !Breaker   ;cout <<"Breaker:"<<Breaker<<endl; goto Start;
+        case 'F': goto Start;
+        case 'G': goto Start;
+        case 'H': goto Start;
+        case 'I': goto Start;
+        case 'J': goto Start;
+        case 'K': goto Start;
+        case 'L': goto Start;
+        default: cout << "Wrong Direction, the game will be terminated\n"; exit(0);
+
+    }
 
 
 
-    //////////MOVE NINJA//////////
-    //MoveNinja(Map,NumRows,NumCol,NinjaRow, NinjaCol);  //Call Ninja Moving the default directions
 
     PrintMap(Map, NumRows,NumCol);
     cout << endl;
