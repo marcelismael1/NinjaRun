@@ -11,13 +11,15 @@ string Ninja_Naming ()
 
     string Ninja_FirstName;
     string Ninja_LastName;
+
     cout<<"First Name: ";
     cin>>Ninja_FirstName;
     cout<<"Last Name: ";
     cin>>Ninja_LastName;
+
     for( int j = 3; j < 5; j++ ) //To select between first and last name
     {
-        string Name; //For letter assinment process
+        string Name; //For the letter assignment process
         string N;
 
         switch (j)
@@ -82,7 +84,7 @@ string Ninja_Naming ()
                         case 'X': Name = Name + "Na";  break;
                         case 'Y': Name = Name + "Fu";  break;
                         case 'Z': Name = Name + "Zi";  break;
-                        // If a differnt character entered, exit with error message
+                        // // If a different character entered, exit with an error message
                         default: cerr << "Wrong Character, Please use only letters for the name\n"; goto Naming;
 
                     }
@@ -101,4 +103,5 @@ string Ninja_Naming ()
 
 
 }
+
 #endif // NAMING_H

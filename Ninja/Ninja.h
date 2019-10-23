@@ -3,15 +3,16 @@
 #define MAPS_H
 using namespace std;
 
-int Shuriken;   //Number of Shuriken
-bool Breaker;     //Breaker Mode Off or on
-bool Mirror;      //Mirror mode status
-char Direction; //Ninja Direction
-char NextChar;
-int Loop;
+int  Shuriken;      //Number of Shurikens
+bool Breaker;       //Breaker Mode status
+bool Mirror;        //Mirror mode status
+char Direction;     //Ninja Direction
+char NextChar;      //The character that is in front of the Ninja
+int  Loop;
 
-void PrintMap(char **Map, int NumRows, int NumCol)   //A Function to print the map
-{
+//Print the map in any certain point
+void PrintMap(char **Map, int NumRows, int NumCol)
+{   cout<<endl;
     for (int RowCount=0; RowCount < NumRows; RowCount++)
        {
         for(int ColCount=0; ColCount < NumCol; ColCount++)
@@ -22,7 +23,8 @@ void PrintMap(char **Map, int NumRows, int NumCol)   //A Function to print the m
        }
 }
 
-void GetStart(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol ) // GET @ dimentions
+// GET @ coordinates
+void GetStart(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol )
 {
     for (int RowCount=0; RowCount < NumRows; RowCount++)
        {
@@ -41,7 +43,8 @@ void GetStart(char **Map, int NumRows, int NumCol, int &NinjaRow,int &NinjaCol )
 
 }
 
-void MoveNinja(int &NinjaRow,int &NinjaCol, char Direction ) //Move Ninja according to direction ONE STEP
+//Move Ninja according to direction ONE STEP
+void MoveNinja(int &NinjaRow,int &NinjaCol, char Direction )
 {
     switch (Direction)
     {
@@ -49,11 +52,12 @@ void MoveNinja(int &NinjaRow,int &NinjaCol, char Direction ) //Move Ninja accord
         case 'E': NinjaCol++; cout<<"EAST\n";  break;
         case 'N': NinjaRow--; cout<<"NORTH\n"; break;
         case 'W': NinjaCol--; cout<<"WEST\n";  break;
-        default: cout << "Wrong Direction, the game will be terminated"; exit(0);
+        default: cout << "Wrong Direction, the game will be terminated\n"; exit(0);
     }
 }
 
-char GetNextChar(char **Map, int &NinjaRow,int &NinjaCol, char Direction) //Get the next char based on Direction
+//Get the next char based on direction
+char GetNextChar(char **Map, int &NinjaRow,int &NinjaCol, char Direction)
 {
 
     switch (Direction)
@@ -67,11 +71,13 @@ char GetNextChar(char **Map, int &NinjaRow,int &NinjaCol, char Direction) //Get 
     return NextChar;
 }
 
-void ChangeDirection(char **Map,int NinjaRow,int NinjaCol, bool Mirror, char &Direction) //Change the direction
+//Change the direction
+void ChangeDirection(char **Map,int NinjaRow,int NinjaCol, bool Mirror, char &Direction)
 {
     char dir;
-    if(Mirror == 0)     dir = 'S';
-        else            dir = 'W';
+
+    if(Mirror == 0)     dir = 'S';  //Mirror Mode off
+        else            dir = 'W';  //Mirror Mode off
 
     for(int i=0;i<4;i++)
     {
@@ -105,14 +111,15 @@ void ChangeDirection(char **Map,int NinjaRow,int NinjaCol, bool Mirror, char &Di
                         else           dir='N';
                       }
                       break;
-            default:  cout << "Wrong Direction, the game will be terminated"; exit(0);
+            default:  cout << "Wrong Direction, the game will be terminated\n"; exit(0);
         }
     }
-    Direction = dir;
+    Direction = dir;  //Set new direction
 
 }
 
-void PathWay (char **Map,int NumRows, int NumCol, int &NinjaRow,int &NinjaCol, char NextChar)  //To Move accross the map
+//To move across the map through pathways
+void PathWay (char **Map,int NumRows, int NumCol, int &NinjaRow,int &NinjaCol, char NextChar)
 {
     for (int RowCount=0; RowCount < NumRows; RowCount++)
        {
@@ -120,7 +127,7 @@ void PathWay (char **Map,int NumRows, int NumCol, int &NinjaRow,int &NinjaCol, c
            {
 
             if (Map[RowCount][ColCount]==NextChar ) //get path way coordinates
-               if ( RowCount != NinjaRow|| ColCount != NinjaCol)
+               if ( RowCount != NinjaRow || ColCount != NinjaCol) //if the coordinates are different from the current location, then change
                     {
                        NinjaRow = RowCount;
                        NinjaCol = ColCount;
@@ -132,4 +139,5 @@ void PathWay (char **Map,int NumRows, int NumCol, int &NinjaRow,int &NinjaCol, c
     //cout << "NinjaRow : "<< NinjaRow<<endl;
     //cout<<"NinjaCol :"<<NinjaCol<<endl;
 }
+
 #endif // NINJA_H
